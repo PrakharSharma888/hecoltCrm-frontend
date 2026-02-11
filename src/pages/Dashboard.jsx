@@ -68,7 +68,7 @@ const Dashboard = () => {
           </h3>
           <div className="flex gap-4">
             <button
-              onClick={() => navigate("/clients/new")}
+              onClick={() => navigate("/add-client")}
               className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg font-bold text-sm hover:opacity-90 transition-opacity"
             >
               <span className="material-symbols-outlined text-[20px]">
