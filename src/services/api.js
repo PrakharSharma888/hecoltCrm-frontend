@@ -1,4 +1,4 @@
-const BASE_URL = "https://hecolt-crm-backend-git-main-prakharsharma888s-projects.vercel.app/api";
+const BASE_URL = "https://hecolt-crm-backend.vercel.app/api";
 
 const getHeaders = () => {
   const token = localStorage.getItem("token");
