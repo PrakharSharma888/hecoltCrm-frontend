@@ -6,6 +6,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import AddClient from "./pages/AddClient";
 import Clients from "./pages/Clients";
 import TaskBoard from "./pages/TaskBoard";
+import Team from "./pages/Team";
 
 // Simple auth guard component
 const ProtectedRoute = ({ children }) => {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/clients" element={<Clients />} />
           <Route path="/add-client" element={<AddClient />} />
           <Route path="/tasks" element={<TaskBoard />} />
+          <Route path="/team" element={<Team />} />
         </Route>
 
         {/* Fallback route */}

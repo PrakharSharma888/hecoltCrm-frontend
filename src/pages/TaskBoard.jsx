@@ -510,11 +510,10 @@ const ManageAssigneesModal = ({ task, onClose, onSuccess }) => {
                     <button
                       onClick={() => handleToggle(user)}
                       disabled={isProcessing}
-                      className={`px-3 py-1 text-xs font-bold rounded-full transition-colors ${
-                        assigned
+                      className={`px-3 py-1 text-xs font-bold rounded-full transition-colors ${assigned
                           ? "bg-red-100 text-red-600 hover:bg-red-200"
                           : "bg-green-100 text-green-600 hover:bg-green-200"
-                      }`}
+                        }`}
                     >
                       {isProcessing ? "..." : assigned ? "Remove" : "Assign"}
                     </button>
@@ -705,9 +704,9 @@ const TaskCommentsModal = ({ task, onClose, currentUser }) => {
                   <span className="text-xs font-bold text-primary">
                     {typeof (c.user || c.author) === "object"
                       ? c.user?.name ||
-                        c.author?.name ||
-                        c.user?.email ||
-                        "User"
+                      c.author?.name ||
+                      c.user?.email ||
+                      "User"
                       : c.user || c.author || "User"}
                   </span>
                   <span className="text-[10px] text-gray-500">
@@ -926,7 +925,40 @@ const TaskBoard = () => {
     }
   };
 
-  if (!tasks) return <div>Loading...</div>;
+  if (tasks === null) {
+    return (
+      <div className="h-full flex flex-col p-8 overflow-hidden pointer-events-none">
+        <div className="flex justify-between items-center mb-6 shrink-0 animate-pulse">
+          <div className="w-1/4 h-10 bg-gray-200 dark:bg-gray-800 rounded-lg"></div>
+          <div className="w-32 h-10 bg-gray-200 dark:bg-gray-800 rounded-lg"></div>
+        </div>
+        <div className="flex gap-2 mb-6 border-b border-[#dedae7] dark:border-white/10 shrink-0 animate-pulse">
+          <div className="w-20 h-8 bg-gray-200 dark:bg-gray-800 rounded-t-lg"></div>
+          <div className="w-32 h-8 bg-gray-200 dark:bg-gray-800 rounded-t-lg"></div>
+        </div>
+        <div className="flex-1 overflow-x-auto overflow-y-hidden">
+          <div className="flex gap-6 h-full min-w-max pb-4 animate-pulse">
+            {[1, 2, 3, 4].map((col) => (
+              <div key={col} className="w-80 shrink-0 flex flex-col gap-4">
+                <div className="w-1/2 h-6 bg-gray-200 dark:bg-gray-800 rounded"></div>
+                {[1, 2, 3].map((card) => (
+                  <div key={card} className="bg-white dark:bg-[#1c142e] border border-gray-100 dark:border-[#2d2445] rounded-xl p-4 h-32 flex flex-col gap-3">
+                    <div className="w-1/4 h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    <div className="w-full h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    <div className="w-3/4 h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    <div className="flex justify-between mt-auto">
+                      <div className="w-1/3 h-4 bg-gray-200 dark:bg-gray-800 rounded"></div>
+                      <div className="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const renderColumn = (status, title, colorCode) => (
     <div className="kanban-column flex flex-col gap-4 w-80 shrink-0">
@@ -999,31 +1031,28 @@ const TaskBoard = () => {
           <div className="flex gap-8">
             <button
               onClick={() => setActiveTab("all")}
-              className={`border-b-2 pb-3 pt-2 text-sm font-bold transition-colors ${
-                activeTab === "all"
+              className={`border-b-2 pb-3 pt-2 text-sm font-bold transition-colors ${activeTab === "all"
                   ? "border-primary text-primary"
                   : "border-transparent text-[#6d5e8d] dark:text-[#a094b8] hover:text-[#131018] dark:hover:text-white"
-              }`}
+                }`}
             >
               All Tasks
             </button>
             <button
               onClick={() => setActiveTab("assignedToMe")}
-              className={`border-b-2 pb-3 pt-2 text-sm font-bold transition-colors ${
-                activeTab === "assignedToMe"
+              className={`border-b-2 pb-3 pt-2 text-sm font-bold transition-colors ${activeTab === "assignedToMe"
                   ? "border-primary text-primary"
                   : "border-transparent text-[#6d5e8d] dark:text-[#a094b8] hover:text-[#131018] dark:hover:text-white"
-              }`}
+                }`}
             >
               Assigned to Me
             </button>
             <button
               onClick={() => setActiveTab("archived")}
-              className={`border-b-2 pb-3 pt-2 text-sm font-bold transition-colors ${
-                activeTab === "archived"
+              className={`border-b-2 pb-3 pt-2 text-sm font-bold transition-colors ${activeTab === "archived"
                   ? "border-primary text-primary"
                   : "border-transparent text-[#6d5e8d] dark:text-[#a094b8] hover:text-[#131018] dark:hover:text-white"
-              }`}
+                }`}
             >
               Archived
             </button>

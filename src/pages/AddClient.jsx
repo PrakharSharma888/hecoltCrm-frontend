@@ -7,13 +7,12 @@ const AddClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     companyName: "",
-    website: "",
-    industry: "",
-    contactName: "",
-    email: "",
-    phone: "",
-    services: [],
-    monthlyBudget: "",
+    businessDescription: "",
+    usp: "",
+    targetLocations: "",
+    targetAudience: "",
+    servicesProviding: [],
+    typeOfContent: "",
   });
 
   const handleChange = (e) => {
@@ -23,10 +22,10 @@ const AddClient = () => {
 
   const toggleService = (service) => {
     setFormData((prev) => {
-      const services = prev.services.includes(service)
-        ? prev.services.filter((s) => s !== service)
-        : [...prev.services, service];
-      return { ...prev, services };
+      const servicesProviding = prev.servicesProviding.includes(service)
+        ? prev.servicesProviding.filter((s) => s !== service)
+        : [...prev.servicesProviding, service];
+      return { ...prev, servicesProviding };
     });
   };
 
@@ -34,16 +33,13 @@ const AddClient = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      // Map form data to API expected format if necessary
-      // Using the structure from the form, assuming backend handles it or minimal mapping
       const payload = {
-        name: formData.companyName, // Mapping companyName to name based on user example
-        email: formData.email,
-        ...formData, // Sending other fields just in case
+        name: formData.companyName || "Unknown Client",
+        ...formData,
       };
 
       await api.addClient(payload);
-      navigate("/dashboard"); // Redirect to dashboard or clients list
+      navigate("/dashboard");
     } catch (error) {
       alert("Failed to add client. Please try again.");
       console.error(error);
@@ -78,17 +74,17 @@ const AddClient = () => {
         </header>
         {/* Form Section */}
         <form className="space-y-8" onSubmit={handleSubmit}>
-          {/* Company Information Card */}
+          {/* Client Overview Card */}
           <section className="bg-white dark:bg-background-dark/50 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
             <div className="p-6 border-b border-gray-100 dark:border-gray-800">
               <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary">
                   business
                 </span>
-                Company Information
+                Client Overview
               </h3>
             </div>
-            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-6 grid grid-cols-1 gap-6">
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                   Company Name
@@ -105,126 +101,108 @@ const AddClient = () => {
               </label>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  Website URL
+                  Business Description (in client’s words)
                 </span>
-                <input
-                  name="website"
-                  value={formData.website}
+                <textarea
+                  name="businessDescription"
+                  value={formData.businessDescription}
                   onChange={handleChange}
-                  className="w-full h-12 px-4 rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary text-gray-900 dark:text-white"
-                  placeholder="https://www.acme.com"
-                  type="url"
+                  rows={4}
+                  className="w-full p-4 rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary text-gray-900 dark:text-white resize-none"
+                  placeholder="Describe the business..."
                 />
               </label>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  Industry
+                  Unique Selling Proposition (USP)
                 </span>
-                <select
-                  name="industry"
-                  value={formData.industry}
+                <input
+                  name="usp"
+                  value={formData.usp}
                   onChange={handleChange}
                   className="w-full h-12 px-4 rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary text-gray-900 dark:text-white"
-                >
-                  <option value="">Select Industry</option>
-                  <option value="tech">Technology</option>
-                  <option value="ecommerce">E-commerce</option>
-                  <option value="finance">Finance</option>
-                  <option value="healthcare">Healthcare</option>
-                </select>
+                  placeholder="What makes them unique?"
+                  type="text"
+                />
               </label>
             </div>
           </section>
-          {/* Contact Details Card */}
+
+          {/* Target Market Card */}
           <section className="bg-white dark:bg-background-dark/50 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
             <div className="p-6 border-b border-gray-100 dark:border-gray-800">
               <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary">
-                  person
+                  public
                 </span>
-                Primary Contact
+                Target Market
               </h3>
             </div>
-            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-6 grid grid-cols-1 gap-6">
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  Contact Name
+                  Target Locations (City / State / Country)
                 </span>
                 <input
-                  name="contactName"
-                  value={formData.contactName}
+                  name="targetLocations"
+                  value={formData.targetLocations}
                   onChange={handleChange}
-                  required
                   className="w-full h-12 px-4 rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary text-gray-900 dark:text-white"
-                  placeholder="John Doe"
+                  placeholder="e.g. New York, NY / USA"
                   type="text"
                 />
               </label>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  Email Address
+                  Target Audience (Age, Gender, Industry, Budget, etc.)
                 </span>
-                <input
-                  name="email"
-                  value={formData.email}
+                <textarea
+                  name="targetAudience"
+                  value={formData.targetAudience}
                   onChange={handleChange}
-                  required
-                  className="w-full h-12 px-4 rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary text-gray-900 dark:text-white"
-                  placeholder="john@acmecorp.com"
-                  type="email"
-                />
-              </label>
-              <label className="flex flex-col gap-2">
-                <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  Phone Number
-                </span>
-                <input
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full h-12 px-4 rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary text-gray-900 dark:text-white"
-                  placeholder="+1 (555) 000-0000"
-                  type="tel"
+                  rows={3}
+                  className="w-full p-4 rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary text-gray-900 dark:text-white resize-none"
+                  placeholder="Describe their target audience..."
                 />
               </label>
             </div>
           </section>
-          {/* Service Configuration Card */}
+
+          {/* Services & Content Card */}
           <section className="bg-white dark:bg-background-dark/50 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
             <div className="p-6 border-b border-gray-100 dark:border-gray-800">
               <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary">
-                  settings_suggest
+                  category
                 </span>
-                Service Configuration
+                Services & Content
               </h3>
             </div>
             <div className="p-6 space-y-6">
               <div className="flex flex-col gap-3">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  Service Type
+                  Services Providing
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {/* Helper component for toggle buttons */}
                   {[
                     "SEO",
                     "PPC",
                     "Content Marketing",
                     "Social Media",
                     "Email Marketing",
+                    "Web Development"
                   ].map((service) => (
                     <button
                       key={service}
                       type="button"
                       onClick={() => toggleService(service)}
-                      className={`px-4 py-2 rounded-full border text-sm font-medium flex items-center gap-2 transition-colors ${
-                        formData.services.includes(service)
+                      className={`px-4 py-2 rounded-full border text-sm font-medium flex items-center gap-2 transition-colors ${formData.servicesProviding.includes(service)
                           ? "border-primary bg-primary/10 text-primary"
                           : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-                      }`}
+                        }`}
                     >
                       {service}
-                      {formData.services.includes(service) && (
+                      {formData.servicesProviding.includes(service) && (
                         <span className="material-symbols-outlined text-xs">
                           close
                         </span>
@@ -239,31 +217,18 @@ const AddClient = () => {
                   </button>
                 </div>
               </div>
-              <label className="flex flex-col gap-2 max-w-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    Monthly Budget
-                  </span>
-                  <span className="text-xs text-gray-400 flex items-center gap-1">
-                    <span className="material-symbols-outlined text-xs">
-                      info
-                    </span>{" "}
-                    Target amount
-                  </span>
-                </div>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">
-                    $
-                  </span>
-                  <input
-                    name="monthlyBudget"
-                    value={formData.monthlyBudget}
-                    onChange={handleChange}
-                    className="w-full h-12 pl-8 pr-4 rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary text-gray-900 dark:text-white"
-                    placeholder="5,000"
-                    type="number"
-                  />
-                </div>
+              <label className="flex flex-col gap-2">
+                <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  Type of content
+                </span>
+                <input
+                  name="typeOfContent"
+                  value={formData.typeOfContent}
+                  onChange={handleChange}
+                  className="w-full h-12 px-4 rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary text-gray-900 dark:text-white"
+                  placeholder="e.g. Blog posts, Videos, Graphics..."
+                  type="text"
+                />
               </label>
             </div>
           </section>

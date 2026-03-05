@@ -13,7 +13,21 @@ const Dashboard = () => {
     api.getRecentActivity().then(setActivity);
   }, []);
 
-  if (!stats) return <div>Loading...</div>;
+  if (!stats) {
+    return (
+      <div className="h-full overflow-y-auto p-8">
+        <div className="max-w-[1200px] mx-auto flex flex-col gap-8 animate-pulse">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex flex-col gap-2 rounded-xl p-6 bg-gray-200 dark:bg-gray-800 h-32"></div>
+            ))}
+          </div>
+          <div className="h-20 bg-gray-200 dark:bg-gray-800 rounded-xl w-1/2"></div>
+          <div className="h-96 bg-gray-200 dark:bg-gray-800 rounded-xl w-full"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full overflow-y-auto p-8">

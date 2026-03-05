@@ -55,16 +55,18 @@ const Sidebar = () => {
               </span>
               <p className="text-sm font-medium">Tasks</p>
             </NavLink>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-[#131018] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+            <NavLink
+              to="/team"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${isActive ? "bg-primary/10 text-primary" : "text-[#131018] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5"}`
+              }
             >
               <span className="material-symbols-outlined text-[24px]">
                 groups
               </span>
               <p className="text-sm font-medium">Team</p>
-            </a>
-            <a
+            </NavLink>
+            {/* <a
               href="#"
               className="flex items-center gap-3 px-3 py-2 rounded-lg text-[#131018] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
             >
@@ -72,7 +74,7 @@ const Sidebar = () => {
                 settings
               </span>
               <p className="text-sm font-medium">Settings</p>
-            </a>
+            </a> */}
           </nav>
         </div>
         {/* Footer Sidebar */}
