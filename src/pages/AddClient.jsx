@@ -11,7 +11,7 @@ const AddClient = () => {
     usp: "",
     targetLocations: "",
     targetAudience: "",
-    servicesProviding: [],
+    servicesProviding: "",
     typeOfContent: "",
   });
 
@@ -20,14 +20,7 @@ const AddClient = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const toggleService = (service) => {
-    setFormData((prev) => {
-      const servicesProviding = prev.servicesProviding.includes(service)
-        ? prev.servicesProviding.filter((s) => s !== service)
-        : [...prev.servicesProviding, service];
-      return { ...prev, servicesProviding };
-    });
-  };
+  /* removed toggleService */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -179,44 +172,19 @@ const AddClient = () => {
               </h3>
             </div>
             <div className="p-6 space-y-6">
-              <div className="flex flex-col gap-3">
+              <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                   Services Providing
                 </span>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "SEO",
-                    "PPC",
-                    "Content Marketing",
-                    "Social Media",
-                    "Email Marketing",
-                    "Web Development"
-                  ].map((service) => (
-                    <button
-                      key={service}
-                      type="button"
-                      onClick={() => toggleService(service)}
-                      className={`px-4 py-2 rounded-full border text-sm font-medium flex items-center gap-2 transition-colors ${formData.servicesProviding.includes(service)
-                          ? "border-primary bg-primary/10 text-primary"
-                          : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-                        }`}
-                    >
-                      {service}
-                      {formData.servicesProviding.includes(service) && (
-                        <span className="material-symbols-outlined text-xs">
-                          close
-                        </span>
-                      )}
-                    </button>
-                  ))}
-                  <button
-                    className="p-2 rounded-full border border-dashed border-gray-300 dark:border-gray-600 text-gray-400 hover:text-primary hover:border-primary transition-all"
-                    type="button"
-                  >
-                    <span className="material-symbols-outlined">add</span>
-                  </button>
-                </div>
-              </div>
+                <input
+                  name="servicesProviding"
+                  value={formData.servicesProviding}
+                  onChange={handleChange}
+                  className="w-full h-12 px-4 rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary focus:ring-1 focus:ring-primary text-gray-900 dark:text-white"
+                  placeholder="e.g. SEO, Content Marketing..."
+                  type="text"
+                />
+              </label>
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                   Type of content

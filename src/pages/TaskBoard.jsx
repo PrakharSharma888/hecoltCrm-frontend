@@ -452,6 +452,7 @@ const ManageAssigneesModal = ({ task, onClose, onSuccess }) => {
         await api.assignTask(task.id || task._id, userId);
       }
       onSuccess(); // Refresh parent
+      onClose(); // Close the popup after success
     } catch (error) {
       console.error("Operation failed", error);
       alert("Operation failed");
@@ -511,8 +512,8 @@ const ManageAssigneesModal = ({ task, onClose, onSuccess }) => {
                       onClick={() => handleToggle(user)}
                       disabled={isProcessing}
                       className={`px-3 py-1 text-xs font-bold rounded-full transition-colors ${assigned
-                          ? "bg-red-100 text-red-600 hover:bg-red-200"
-                          : "bg-green-100 text-green-600 hover:bg-green-200"
+                        ? "bg-red-100 text-red-600 hover:bg-red-200"
+                        : "bg-green-100 text-green-600 hover:bg-green-200"
                         }`}
                     >
                       {isProcessing ? "..." : assigned ? "Remove" : "Assign"}
@@ -1032,8 +1033,8 @@ const TaskBoard = () => {
             <button
               onClick={() => setActiveTab("all")}
               className={`border-b-2 pb-3 pt-2 text-sm font-bold transition-colors ${activeTab === "all"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-[#6d5e8d] dark:text-[#a094b8] hover:text-[#131018] dark:hover:text-white"
+                ? "border-primary text-primary"
+                : "border-transparent text-[#6d5e8d] dark:text-[#a094b8] hover:text-[#131018] dark:hover:text-white"
                 }`}
             >
               All Tasks
@@ -1041,8 +1042,8 @@ const TaskBoard = () => {
             <button
               onClick={() => setActiveTab("assignedToMe")}
               className={`border-b-2 pb-3 pt-2 text-sm font-bold transition-colors ${activeTab === "assignedToMe"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-[#6d5e8d] dark:text-[#a094b8] hover:text-[#131018] dark:hover:text-white"
+                ? "border-primary text-primary"
+                : "border-transparent text-[#6d5e8d] dark:text-[#a094b8] hover:text-[#131018] dark:hover:text-white"
                 }`}
             >
               Assigned to Me
@@ -1050,8 +1051,8 @@ const TaskBoard = () => {
             <button
               onClick={() => setActiveTab("archived")}
               className={`border-b-2 pb-3 pt-2 text-sm font-bold transition-colors ${activeTab === "archived"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-[#6d5e8d] dark:text-[#a094b8] hover:text-[#131018] dark:hover:text-white"
+                ? "border-primary text-primary"
+                : "border-transparent text-[#6d5e8d] dark:text-[#a094b8] hover:text-[#131018] dark:hover:text-white"
                 }`}
             >
               Archived

@@ -8,6 +8,10 @@ const Dashboard = () => {
   const [stats, setStats] = useState(null);
   const [activity, setActivity] = useState([]);
 
+  const currentUserStr = localStorage.getItem("user");
+  const currentUser = currentUserStr ? JSON.parse(currentUserStr) : null;
+  const currentUserName = currentUser ? (currentUser.name || currentUser.email || "User") : "User";
+
   useEffect(() => {
     api.getDashboardStats().then(setStats);
     api.getRecentActivity().then(setActivity);
@@ -127,7 +131,7 @@ const Dashboard = () => {
                 ) : (
                   <div className="h-10 w-10 rounded-full overflow-hidden bg-gray-200">
                     <img
-                      alt={item.user}
+                      alt={item.user === "Current User" ? currentUserName : item.user}
                       className="w-full h-full object-cover"
                       src={item.avatar}
                     />
@@ -135,7 +139,9 @@ const Dashboard = () => {
                 )}
                 <div className="flex-1">
                   <p className="text-sm text-[#131018] dark:text-white">
-                    <span className="font-bold">{item.user}</span>{" "}
+                    <span className="font-bold">
+                      {item.user === "Current User" ? currentUserName : item.user}
+                    </span>{" "}
                     {item.action && (
                       <>
                         {item.action}{" "}
